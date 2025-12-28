@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://hospital-finder-stah.onrender.com";
+
 type Hospital = {
   id: number;
   name: string;
@@ -54,7 +56,7 @@ function App() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/hospitals?pincode=${encodeURIComponent(
+        `${API_BASE_URL}/api/hospitals?pincode=${encodeURIComponent(
           pincode
         )}`
       );
