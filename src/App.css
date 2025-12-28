@@ -1,0 +1,930 @@
+/* ==================== BASE STYLES ==================== */
+.app {
+  padding: 3rem 2rem;
+  font-family: 'Inter', 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+/* ==================== SEARCH FORM ==================== */
+.search-form {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.search-form:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.search-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  flex: 1;
+  letter-spacing: 0.01em;
+}
+
+.search-input {
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  outline: none;
+  background: #fafafa;
+  color: #111827;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-input:hover {
+  border-color: #d1d5db;
+  background: white;
+}
+
+.search-input:focus {
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.search-button {
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(102, 126, 234, 0.3);
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.search-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+}
+
+.search-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.search-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.button-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: buttonSpin 0.8s linear infinite;
+}
+
+@keyframes buttonSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== RESULTS LIST ==================== */
+.results-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.result-item {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* .result-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: borderGlow 3s ease infinite;
+} */
+
+.result-item:hover::before {
+  opacity: 1;
+}
+
+.result-item:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(102, 126, 234, 0.2), 0 10px 10px -5px rgba(118, 75, 162, 0.15);
+  background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Staggered animation delays */
+.result-item:nth-child(1) { animation-delay: 0.1s; }
+.result-item:nth-child(2) { animation-delay: 0.2s; }
+.result-item:nth-child(3) { animation-delay: 0.3s; }
+.result-item:nth-child(4) { animation-delay: 0.4s; }
+.result-item:nth-child(5) { animation-delay: 0.5s; }
+.result-item:nth-child(6) { animation-delay: 0.6s; }
+.result-item:nth-child(7) { animation-delay: 0.7s; }
+.result-item:nth-child(8) { animation-delay: 0.8s; }
+.result-item:nth-child(9) { animation-delay: 0.9s; }
+.result-item:nth-child(10) { animation-delay: 1s; }
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ==================== HOSPITAL INFO ==================== */
+.hospital-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hospital-name {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #111827;
+  line-height: 1.4;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.result-item:hover .hospital-name {
+  color: #667eea;
+  animation: textShine 2s ease-in-out infinite;
+}
+
+@keyframes textShine {
+  0%, 100% {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  50% {
+    background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+.hospital-address {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.result-item:hover .hospital-address {
+  color: #374151;
+}
+
+.hospital-address::before {
+  content: "📍";
+  flex-shrink: 0;
+  animation: pinBounce 2s ease-in-out infinite;
+}
+
+@keyframes pinBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.hospital-meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hospital-pincode {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 600;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  display: inline-block;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hospital-pincode::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.result-item:hover .hospital-pincode {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: scale(1.05);
+}
+
+.result-item:hover .hospital-pincode::before {
+  left: 100%;
+}
+
+.hospital-distance {
+  font-size: 0.875rem;
+  color: #059669;
+  font-weight: 600;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.hospital-distance::before {
+  content: "🚗";
+  font-size: 0.9rem;
+}
+
+/* ==================== MAP BUTTON ==================== */
+.map-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(102, 126, 234, 0.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.map-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.5);
+  background: linear-gradient(135deg, #5568d3 0%, #6a3e8f 100%);
+}
+
+.map-button:active {
+  transform: translateY(0);
+}
+
+.map-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+.map-button-text {
+  font-weight: 600;
+}
+
+/* ==================== LOADING STATE ==================== */
+.loading-state {
+  background: white;
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-animation {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.hospital-pulse {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulse-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #667eea;
+  border-radius: 50%;
+  animation: pulse-expand 2s ease-out infinite;
+}
+
+.pulse-ring-1 { animation-delay: 0s; }
+.pulse-ring-2 { animation-delay: 0.6s; }
+.pulse-ring-3 { animation-delay: 1.2s; }
+
+@keyframes pulse-expand {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+.hospital-icon-center {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  animation: iconRotate 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes iconRotate {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+}
+
+.hospital-plus {
+  font-size: 2.5rem;
+  color: white;
+  font-weight: bold;
+  line-height: 1;
+  animation: plusPulse 1s ease-in-out infinite;
+}
+
+@keyframes plusPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.loading-dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-dots span {
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: 0s; }
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.loading-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.loading-text {
+  font-size: 1.05rem;
+  color: #6b7280;
+  line-height: 1.6;
+  animation: fadeIn 0.5s ease 0.2s both;
+}
+
+.loading-text strong {
+  color: #667eea;
+  font-weight: 700;
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+  background: white;
+  border-radius: 16px;
+  padding: 4rem 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+}
+
+.empty-icon-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Initial state - Hospital with search glass */
+.hospital-icon {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.hospital-building {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.hospital-cross {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  color: white;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.hospital-windows {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.hospital-windows span {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+  animation: windowBlink 2s ease-in-out infinite;
+}
+
+.hospital-windows span:nth-child(2) { animation-delay: 0.5s; }
+.hospital-windows span:nth-child(3) { animation-delay: 1s; }
+.hospital-windows span:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes windowBlink {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.search-animation {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  animation: searchBounce 2s ease-in-out infinite;
+}
+
+@keyframes searchBounce {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(5px, 5px);
+  }
+}
+
+.search-circle {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #667eea;
+  border-radius: 50%;
+  background: white;
+}
+
+.search-handle {
+  width: 3px;
+  height: 15px;
+  background: #667eea;
+  position: absolute;
+  bottom: -8px;
+  right: 2px;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+/* Not found state - Magnifying glass with sad face */
+.not-found-icon {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  animation: shake 0.8s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.magnifying-glass {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.glass-lens {
+  width: 70px;
+  height: 70px;
+  border: 5px solid #667eea;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+  position: relative;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.sad-face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.eye {
+  width: 8px;
+  height: 8px;
+  background: #667eea;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 4px;
+  animation: blink 3s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 96%, 100% {
+    transform: scaleY(1);
+  }
+  98% {
+    transform: scaleY(0.1);
+  }
+}
+
+.mouth {
+  width: 20px;
+  height: 10px;
+  border: 2px solid #667eea;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  transform: rotate(180deg);
+  margin-top: 2px;
+}
+
+.glass-handle {
+  width: 6px;
+  height: 35px;
+  background: #667eea;
+  position: absolute;
+  bottom: -20px;
+  right: 5px;
+  transform: rotate(45deg);
+  border-radius: 3px;
+}
+
+.question-marks {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  display: flex;
+  gap: 4px;
+}
+
+.question-marks span {
+  font-size: 1.5rem;
+  color: #f59e0b;
+  font-weight: bold;
+  animation: popIn 0.6s ease-in-out forwards;
+  opacity: 0;
+}
+
+.question-marks span:nth-child(1) { animation-delay: 0.2s; }
+.question-marks span:nth-child(2) { animation-delay: 0.4s; }
+.question-marks span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.empty-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.75rem;
+  animation: slideInTitle 0.6s ease 0.3s both;
+}
+
+@keyframes slideInTitle {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.empty-text {
+  font-size: 1.05rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  animation: slideInTitle 0.6s ease 0.4s both;
+}
+
+.empty-text strong {
+  color: #667eea;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.empty-suggestions {
+  background: linear-gradient(135deg, #f8fafc 0%, #f0f4ff 100%);
+  border: 2px solid #e0e7ff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+  animation: slideInTitle 0.6s ease 0.5s both;
+}
+
+.suggestion-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.suggestion-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.suggestion-list li {
+  font-size: 0.95rem;
+  color: #4b5563;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+
+.suggestion-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+  animation: arrowSlide 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowSlide {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 640px) {
+  .app {
+    padding: 2rem 1rem;
+  }
+
+  .app-title {
+    font-size: 2rem;
+  }
+
+  .search-form {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .result-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .map-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hospital-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==================== UTILITY ANIMATIONS ==================== */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loading {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+  background-size: 1000px 100%;
+}
